@@ -1,25 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 
 public static class TetrominoResourceLoader
 {
-    private const char TETROMINO_SEGMENT_DELIMITER = '-';
-
-    public static List<int[,]> LoadTetrominoBlueprint(string path)
+    public static int[,] LoadTetrominoBlueprint(string path)
     {
         var typeSpec = Resources.Load<TextAsset>(path);
-        var segments = typeSpec.text.Replace("\r", "").Split(TETROMINO_SEGMENT_DELIMITER);
-
-        return segments
-            .Select(s => LoadTetrominoBlueprintSegment(s))
-            .ToList();
-    }
-
-    private static int[,] LoadTetrominoBlueprintSegment(string segment)
-    {
-        var lines = segment.Split('\n')
+        var lines = typeSpec.text.Replace("\r", "").Split('\n')
             .Where(s => s.Length > 0)
             .ToArray();
 

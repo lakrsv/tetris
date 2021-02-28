@@ -18,10 +18,10 @@ public class TetrominoDefinition
     }
 
     public TetrominoType Type { get; private set; }
-    public List<int[,]> Blueprint { get; private set; }
+    public int[,] Blueprint { get; private set; }
 
 
-    private TetrominoDefinition(List<int[,]> blueprint, TetrominoType type)
+    private TetrominoDefinition(int[,] blueprint, TetrominoType type)
     {
         Blueprint = blueprint;
         Type = type;

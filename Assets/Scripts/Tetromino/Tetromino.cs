@@ -10,19 +10,27 @@ public class Tetromino
 
     private TetrominoDefinition _tetrominoDefinition;
 
-    private int _currentSegment = 0;
+    private int[,] _currentBlueprint;
+    private int[,][] _boardPosition;
+    private int[] _pivot;
 
-    private List<int[]> _boardPosition = new List<int[]>();
-
-
-    public void AddPosition(int[] position)
+    public void SetBoardPosition(int[,][] boardPosition)
     {
-        _boardPosition.Add(position);
+        _boardPosition = boardPosition;
     }
 
-    public List<int[]> GetPositions()
+    public int[,][] GetBoardPosition()
     {
         return _boardPosition;
+    }
+    
+    public int[] GetPivotBoardPosition()
+    {
+        if(_pivot == null)
+        {
+            return null;
+        }
+        return _boardPosition[_pivot[0], _pivot[1]];
     }
 
     public void Place()
@@ -30,13 +38,41 @@ public class Tetromino
         Placed = true;
     }
 
+    public int[] GetPivot()
+    {
+        return _pivot;
+    }
+
     public Tetromino(TetrominoDefinition tetrominoDefinition)
     {
         _tetrominoDefinition = tetrominoDefinition;
+        SetBlueprint(tetrominoDefinition.Blueprint);
+
     }
 
-    public int[,] GetCurrentSegment()
+    public int[,] GetBlueprint()
     {
-        return _tetrominoDefinition.Blueprint[_currentSegment];
+        return _currentBlueprint;
+    }
+
+    public void SetBlueprint(int[,] blueprint)
+    {
+        _currentBlueprint = blueprint;
+        _pivot = null;
+        for (int x = 0; x < blueprint.GetLength(0); ++x)
+        {
+            for (int y = 0; y < blueprint.GetLength(1); ++y)
+            {
+                if (_currentBlueprint[x, y] == 2)
+                {
+                    _pivot = new int[] { x, y };
+                    break;
+                }
+            }
+            if (_pivot != null)
+            {
+                break;
+            }
+        }
     }
 }

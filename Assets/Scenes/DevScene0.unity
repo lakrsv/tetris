@@ -526,8 +526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712c9251976b37a4db9e8802f32e3e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stepInterval: 1
-  _blockPlaceGracePeriod: 0
+  _stepInterval: 0.25
+  _blockPlaceGracePeriod: 0.5
   _boardRender: {fileID: 1671064496}
   _tetrominoQueue: {fileID: 1608899268}
   DropFast: 0
