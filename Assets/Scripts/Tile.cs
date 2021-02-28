@@ -3,38 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IRenderable
 {
     [SerializeField]
-    private Sprite backgroundTile;
-    [SerializeField]
-    private Sprite blockTile;
+    private SpriteRenderer _spriteRenderer;
+    private TetrominoDefinition.TetrominoType _tetromino = TetrominoDefinition.TetrominoType.NONE;
 
-    private SpriteRenderer spriteRenderer;
-
-    private void Awake()
+    public void Render(Sprites sprites)
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sprite = sprites.GetSpriteForType(_tetromino);
+        _spriteRenderer.color = sprites.GetColorForType(_tetromino);
     }
 
+    public void SetSprite(Sprite sprite)
+    {
+        _spriteRenderer.sprite = sprite;
+    }
 
     public void SetColor(Color color)
     {
-        spriteRenderer.color = color;
-    }
-
-    public void MakeBackgroundTile()
-    {
-        spriteRenderer.sprite = backgroundTile;
-    }
-
-    public void MakeBlockTile()
-    {
-        spriteRenderer.sprite = blockTile;
+        _spriteRenderer.color = color;
     }
 
     public float GetPixelsPerUnitSpriteRatio()
     {
-        return spriteRenderer.sprite.rect.width / spriteRenderer.sprite.pixelsPerUnit;
+        return _spriteRenderer.sprite.rect.width / _spriteRenderer.sprite.pixelsPerUnit;
+    }
+
+    public void SetType(TetrominoDefinition.TetrominoType type)
+    {
+        _tetromino = type;
+    }
+
+    public bool HasTetromino()
+    {
+        return _tetromino != TetrominoDefinition.TetrominoType.NONE;
     }
 }
